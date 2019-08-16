@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from world import World
+from itertools import permutations 
 
 import random
 
@@ -138,7 +139,7 @@ def find_route(priority=list('nwes')):
             if path_back is None:
                 # print(path)
                 # print(moves)
-                print("Found success")
+                # print("Found success")
                 break
 
             moves_back = []
@@ -165,7 +166,21 @@ def find_route(priority=list('nwes')):
 
 
 # print(moves)
-traversalPath = find_route()
+perm = permutations(['n', 's', 'w', 'e'])
+shortest = None
+sp = None
+for p in perm:
+    if shortest is None:
+        shortest = find_route(list(p))
+        sp = p
+    else:
+        path = find_route(list(p))
+        if len(path) < len(shortest):
+            shortest = path
+            sp = p
+
+print(sp)
+traversalPath = shortest
 
 
 # TRAVERSAL TEST
